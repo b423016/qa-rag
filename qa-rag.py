@@ -8,8 +8,7 @@ from sentence_transformers import SentenceTransformer
 # Load Data
 @st.cache
 def load_data(file_path):
-    return pd.read_csv(r"C:\\Users\\ayush\\Downloads\\qa.csv")
-
+    return pd.read_csv("qa.csv")
 class Retriever:
     def __init__(self, data):
         self.data = data
@@ -22,7 +21,6 @@ class Retriever:
         return embeddings
 
     def embed_questions(self, questions):
-        # Use the pre-trained model to generate embeddings
         embeddings = self.model.encode(questions, convert_to_tensor=True)
         return embeddings
 
@@ -59,11 +57,9 @@ class RAGPipeline:
         prompt = f"Context: {context['Answers'].iloc[0]}\nQuestion: {query}\nAnswer:"
         response = self.generator.generate(prompt)
         return response
-
-# Streamlit Interface
 st.title("Interview Chatbot")
 
-data_file = r"C:\\Users\\ayush\\Downloads\\qa.csv"
+data_file = "qa.csv" 
 data = load_data(data_file)
 pipeline = RAGPipeline(data)
 
